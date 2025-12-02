@@ -1,5 +1,6 @@
 package otus.task;
 
+import otus.task.animal.Color;
 import otus.task.birds.Duck;
 import otus.task.factory.AnimalFactory;
 import otus.task.factory.AnimalType;
@@ -29,18 +30,23 @@ public class AnimalApp {
                     System.out.println(animal);
                 }
             } else if (currentCommand == Command.ADD) {
-                AnimalType animalType = null;
+                AnimalType animalType =  getAnimalType(scanner);
                 Animal animal = animalFactory.create(animalType);
-
-
                 //запросить параметры животного
 
                 System.out.println("Введите имя животного");
+                animal.setName(scanner.next());
                 System.out.println("Введите возраст");
+                animal.setAge(Integer.parseInt(scanner.next()));
                 System.out.println("Введите вес");
-                System.out.println("Введите цвет");
+                animal.setWeight(Integer.parseInt(scanner.next()));
+                System.out.printf("Введите одну из команд (%s) :", String.join("/", Color.COLORS));
+                animal.setColor(Color.valueOf(scanner.next()));
+
+
+
                 animals.add(animal);
-//                animal.say();
+                animal.say();
             }
         }
     }
@@ -57,4 +63,19 @@ public class AnimalApp {
         }
         return Command.fromString(commandInput);
     }
+
+    private static AnimalType getAnimalType(Scanner scanner) {
+        String animalTypeInput = null;
+        while (AnimalType.doesNotContain(animalTypeInput)) {
+            if (animalTypeInput != null) {
+                System.out.println("Неверный тип животного");
+            }
+            System.out.printf("Выберете тип животного (%s) :", String.join("/", AnimalType.TYPES));
+            animalTypeInput = scanner.nextLine();
+        }
+        return AnimalType.fromString(animalTypeInput);
+    }
+
+
+
 }

@@ -9,6 +9,18 @@ public abstract class Animal {
     private int weight;
     private Color color;
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public String getName() {
         return name;
     }
@@ -23,11 +35,11 @@ public abstract class Animal {
 
     @Override
     public String toString() {
-        return String.format("«Привет! Меня зовут %s, мне age лет %d %s, я вешу - weight кг, мой цвет - color", name, age, getAgeSuffix(), weight, getColorValue());
+        return String.format("«Привет! Меня зовут %s, мне лет %d %s, я вешу - %s кг, мой цвет - %s", name, age, getAgeSuffix(), weight, getColorValue());
     }
 
     private String getColorValue() {
-        if (color == null) {
+        if (null != color) {
             return "неизвестный";
         }
         return color.getValue();
