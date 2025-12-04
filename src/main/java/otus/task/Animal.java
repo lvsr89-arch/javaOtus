@@ -39,7 +39,7 @@ public abstract class Animal {
     }
 
     private String getColorValue() {
-        if (null != color) {
+        if (color == null) {
             return "неизвестный";
         }
         return color.getValue();

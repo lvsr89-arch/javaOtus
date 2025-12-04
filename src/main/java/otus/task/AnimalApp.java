@@ -1,7 +1,6 @@
 package otus.task;
 
 import otus.task.animal.Color;
-import otus.task.birds.Duck;
 import otus.task.factory.AnimalFactory;
 import otus.task.factory.AnimalType;
 
@@ -13,7 +12,7 @@ public class AnimalApp {
 
     private static AnimalFactory animalFactory;
 
-    public static void main(String[] args) {
+    static void main() {
         List<Animal> animals = new ArrayList<>();
         AnimalFactory animalFactory = new AnimalFactory();
 
@@ -37,13 +36,34 @@ public class AnimalApp {
                 System.out.println("Введите имя животного");
                 animal.setName(scanner.next());
                 System.out.println("Введите возраст");
-                animal.setAge(Integer.parseInt(scanner.next()));
+//                animal.setAge(Integer.parseInt(scanner.next()));
+                String ageInput = scanner.next();
+
+                    try {
+                        animal.setAge(Integer.parseInt(ageInput));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Не корректное число");
+                        animal.setAge(Integer.parseInt(ageInput));
+                    }
+
                 System.out.println("Введите вес");
-                animal.setWeight(Integer.parseInt(scanner.next()));
-                System.out.printf("Введите одну из команд (%s) :", String.join("/", Color.COLORS));
-                animal.setColor(Color.valueOf(scanner.next()));
+                String weightInput = scanner.next();
 
+                    try {
+                        animal.setWeight(Integer.parseInt(weightInput));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Не корректное число");
+                        animal.setWeight(Integer.parseInt(weightInput));
+                    }
 
+                System.out.println("Введите цвет");
+                String colorInput = scanner.next();
+
+                    try {
+                        animal.setColor(Color.valueOf(colorInput.toUpperCase().trim()));
+                    } catch (IllegalArgumentException e) {
+                        animal.setColor(Color.UNDEFINED);
+                    }
 
                 animals.add(animal);
                 animal.say();
@@ -75,7 +95,4 @@ public class AnimalApp {
         }
         return AnimalType.fromString(animalTypeInput);
     }
-
-
-
 }
