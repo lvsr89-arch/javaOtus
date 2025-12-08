@@ -12,7 +12,7 @@ public class AnimalApp {
 
     private static AnimalFactory animalFactory;
 
-    static void main() {
+    public static void main() {
         List<Animal> animals = new ArrayList<>();
         AnimalFactory animalFactory = new AnimalFactory();
 
@@ -36,7 +36,6 @@ public class AnimalApp {
                 System.out.println("Введите имя животного");
                 animal.setName(scanner.next());
                 System.out.println("Введите возраст");
-//                animal.setAge(Integer.parseInt(scanner.next()));
                 String ageInput = scanner.next();
 
                     try {
@@ -53,7 +52,6 @@ public class AnimalApp {
                         animal.setWeight(Integer.parseInt(weightInput));
                     } catch (NumberFormatException e) {
                         System.out.println("Не корректное число");
-                        animal.setWeight(Integer.parseInt(weightInput));
                     }
 
                 System.out.println("Введите цвет");
