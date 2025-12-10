@@ -35,7 +35,7 @@ public abstract class Animal {
 
     @Override
     public String toString() {
-        return String.format("«Привет! Меня зовут %s, мне лет %d %s, я вешу - %s кг, мой цвет - %s", name, age, getAgeSuffix(), weight, getColorValue());
+        return String.format("«Привет! Меня зовут %s, мне %d %s, я вешу - %s кг, мой цвет - %s", name, age, getAgeSuffix(), weight, getColorValue());
     }
 
     private String getColorValue() {
@@ -48,7 +48,7 @@ public abstract class Animal {
     private String getAgeSuffix() {
         int remainder10 = age % 10;
         int remainder100 = age % 100;
-        if (remainder10 == remainder100 && remainder100 != 11) {
+        if (remainder10 == 1 && remainder100 != 11) {
             return "год";
         }
         if (remainder10 >= 2 && remainder10 <= 4 && remainder100 != 12 && remainder100 != 13 && remainder100 != 14) {

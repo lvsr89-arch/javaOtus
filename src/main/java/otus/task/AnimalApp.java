@@ -3,16 +3,13 @@ package otus.task;
 import otus.task.animal.Color;
 import otus.task.factory.AnimalFactory;
 import otus.task.factory.AnimalType;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class AnimalApp {
 
-    private static AnimalFactory animalFactory;
-
-    public static void main() {
+    public static void main(String[] args) {
         List<Animal> animals = new ArrayList<>();
         AnimalFactory animalFactory = new AnimalFactory();
 
@@ -25,43 +22,34 @@ public class AnimalApp {
                 if (animals.isEmpty()) {
                     System.out.println("Список пуст");
                 }
+
                 for (Animal animal : animals) {
                     System.out.println(animal);
                 }
+
             } else if (currentCommand == Command.ADD) {
                 AnimalType animalType =  getAnimalType(scanner);
                 Animal animal = animalFactory.create(animalType);
                 //запросить параметры животного
 
                 System.out.println("Введите имя животного");
-                animal.setName(scanner.next());
-                System.out.println("Введите возраст");
-                String ageInput = scanner.next();
+                animal.setName(scanner.nextLine());
 
-                    try {
-                        animal.setAge(Integer.parseInt(ageInput));
-                    } catch (NumberFormatException e) {
-                        System.out.println("Не корректное число");
-                        animal.setAge(Integer.parseInt(ageInput));
-                    }
+                System.out.println("Введите возраст");
+                animal.setAge(checkNumber(scanner));
 
                 System.out.println("Введите вес");
-                String weightInput = scanner.next();
-
-                    try {
-                        animal.setWeight(Integer.parseInt(weightInput));
-                    } catch (NumberFormatException e) {
-                        System.out.println("Не корректное число");
-                    }
+                animal.setWeight(checkNumber(scanner));
 
                 System.out.println("Введите цвет");
-                String colorInput = scanner.next();
+                String colorInput = scanner.nextLine().toUpperCase().trim();
 
-                    try {
-                        animal.setColor(Color.valueOf(colorInput.toUpperCase().trim()));
-                    } catch (IllegalArgumentException e) {
-                        animal.setColor(Color.UNDEFINED);
-                    }
+                if (!Color.COLORS.contains(colorInput)) {
+                    animal.setColor(Color.UNDEFINED);
+                    System.out.println("Не понял что ты ввёл, поставил неизвестный");
+                } else {
+                    animal.setColor(Color.valueOf(colorInput));
+                }
 
                 animals.add(animal);
                 animal.say();
@@ -92,5 +80,16 @@ public class AnimalApp {
             animalTypeInput = scanner.nextLine();
         }
         return AnimalType.fromString(animalTypeInput);
+    }
+
+    private static int checkNumber(Scanner scanner) {
+        while (true) {
+            String weightInput = scanner.nextLine();
+            if (!weightInput.matches("^\\d{1,9}?$")) {
+                System.out.println("Попробуй ещё раз");
+                continue;
+            }
+            return Integer.parseInt(weightInput);
+        }
     }
 }
